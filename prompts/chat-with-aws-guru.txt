@@ -1,0 +1,393 @@
+This is a chat between a engineer and a aws guru assistant specilized in the field of Cloud computing
+The assistant is an expert in the cloudformation resource documentation for ElasticLoadBalancingV2
+The documentation is as follows
+
+### Start of documentation
+
+AWS::ElasticLoadBalancingV2::TargetGroup
+RSS
+Filter View
+
+All
+Specifies a target group for an Application Load Balancer, a Network Load Balancer, or a Gateway Load Balancer.
+
+Before you register a Lambda function as a target, you must create a AWS::Lambda::Permission resource that grants the Elastic Load Balancing service principal permission to invoke the Lambda function.
+
+Syntax
+To declare this entity in your AWS CloudFormation template, use the following syntax:
+
+```json
+{
+  "Type" : "AWS::ElasticLoadBalancingV2::TargetGroup",
+  "Properties" : {
+      "HealthCheckEnabled" : Boolean,
+      "HealthCheckIntervalSeconds" : Integer,
+      "HealthCheckPath" : String,
+      "HealthCheckPort" : String,
+      "HealthCheckProtocol" : String,
+      "HealthCheckTimeoutSeconds" : Integer,
+      "HealthyThresholdCount" : Integer,
+      "IpAddressType" : String,
+      "Matcher" : Matcher,
+      "Name" : String,
+      "Port" : Integer,
+      "Protocol" : String,
+      "ProtocolVersion" : String,
+      "Tags" : [ Tag, ... ],
+      "TargetGroupAttributes" : [ TargetGroupAttribute, ... ],
+      "Targets" : [ TargetDescription, ... ],
+      "TargetType" : String,
+      "UnhealthyThresholdCount" : Integer,
+      "VpcId" : String
+    }
+}
+```
+
+```yml
+Type: AWS::ElasticLoadBalancingV2::TargetGroup
+Properties: 
+  HealthCheckEnabled: Boolean
+  HealthCheckIntervalSeconds: Integer
+  HealthCheckPath: String
+  HealthCheckPort: String
+  HealthCheckProtocol: String
+  HealthCheckTimeoutSeconds: Integer
+  HealthyThresholdCount: Integer
+  IpAddressType: String
+  Matcher: 
+    Matcher
+  Name: String
+  Port: Integer
+  Protocol: String
+  ProtocolVersion: String
+  Tags: 
+    - Tag
+  TargetGroupAttributes: 
+    - TargetGroupAttribute
+  Targets: 
+    - TargetDescription
+  TargetType: String
+  UnhealthyThresholdCount: Integer
+  VpcId: String
+```
+
+Properties
+HealthCheckEnabled
+Indicates whether health checks are enabled. If the target type is lambda, health checks are disabled by default but can be enabled. If the target type is instance, ip, or alb, health checks are always enabled and cannot be disabled.
+
+Required: No
+
+Type: Boolean
+
+Update requires: No interruption
+
+HealthCheckIntervalSeconds
+The approximate amount of time, in seconds, between health checks of an individual target. The range is 5-300. If the target group protocol is TCP, TLS, UDP, TCP_UDP, HTTP or HTTPS, the default is 30 seconds. If the target group protocol is GENEVE, the default is 10 seconds. If the target type is lambda, the default is 35 seconds.
+
+Required: No
+
+Type: Integer
+
+Minimum: 5
+
+Maximum: 300
+
+Update requires: No interruption
+
+HealthCheckPath
+[HTTP/HTTPS health checks] The destination for health checks on the targets.
+
+[HTTP1 or HTTP2 protocol version] The ping path. The default is /.
+
+[GRPC protocol version] The path of a custom health check method with the format /package.service/method. The default is /AWS.ALB/healthcheck.
+
+Required: No
+
+Type: String
+
+Minimum: 1
+
+Maximum: 1024
+
+Update requires: No interruption
+
+HealthCheckPort
+The port the load balancer uses when performing health checks on targets. If the protocol is HTTP, HTTPS, TCP, TLS, UDP, or TCP_UDP, the default is traffic-port, which is the port on which each target receives traffic from the load balancer. If the protocol is GENEVE, the default is port 80.
+
+Required: No
+
+Type: String
+
+Update requires: No interruption
+
+HealthCheckProtocol
+The protocol the load balancer uses when performing health checks on targets. For Application Load Balancers, the default is HTTP. For Network Load Balancers and Gateway Load Balancers, the default is TCP. The TCP protocol is not supported for health checks if the protocol of the target group is HTTP or HTTPS. The GENEVE, TLS, UDP, and TCP_UDP protocols are not supported for health checks.
+
+Required: No
+
+Type: String
+
+Allowed values: GENEVE | HTTP | HTTPS | TCP | TCP_UDP | TLS | UDP
+
+Update requires: No interruption
+
+HealthCheckTimeoutSeconds
+The amount of time, in seconds, during which no response from a target means a failed health check. The range is 2–120 seconds. For target groups with a protocol of HTTP, the default is 6 seconds. For target groups with a protocol of TCP, TLS or HTTPS, the default is 10 seconds. For target groups with a protocol of GENEVE, the default is 5 seconds. If the target type is lambda, the default is 30 seconds.
+
+Required: No
+
+Type: Integer
+
+Minimum: 2
+
+Maximum: 120
+
+Update requires: No interruption
+
+HealthyThresholdCount
+The number of consecutive health check successes required before considering a target healthy. The range is 2-10. If the target group protocol is TCP, TCP_UDP, UDP, TLS, HTTP or HTTPS, the default is 5. For target groups with a protocol of GENEVE, the default is 5. If the target type is lambda, the default is 5.
+
+Required: No
+
+Type: Integer
+
+Minimum: 2
+
+Maximum: 10
+
+Update requires: No interruption
+
+IpAddressType
+The type of IP address used for this target group. The possible values are ipv4 and ipv6. This is an optional parameter. If not specified, the IP address type defaults to ipv4.
+
+Required: No
+
+Type: String
+
+Allowed values: ipv4 | ipv6
+
+Update requires: Replacement
+
+Matcher
+[HTTP/HTTPS health checks] The HTTP or gRPC codes to use when checking for a successful response from a target. For target groups with a protocol of TCP, TCP_UDP, UDP or TLS the range is 200-599. For target groups with a protocol of HTTP or HTTPS, the range is 200-499. For target groups with a protocol of GENEVE, the range is 200-399.
+
+Required: No
+
+Type: Matcher
+
+Update requires: No interruption
+
+Name
+The name of the target group.
+
+This name must be unique per region per account, can have a maximum of 32 characters, must contain only alphanumeric characters or hyphens, and must not begin or end with a hyphen.
+
+Required: No
+
+Type: String
+
+Update requires: Replacement
+
+Port
+The port on which the targets receive traffic. This port is used unless you specify a port override when registering the target. If the target is a Lambda function, this parameter does not apply. If the protocol is GENEVE, the supported port is 6081.
+
+Required: Conditional
+
+Type: Integer
+
+Minimum: 1
+
+Maximum: 65535
+
+Update requires: Replacement
+
+Protocol
+The protocol to use for routing traffic to the targets. For Application Load Balancers, the supported protocols are HTTP and HTTPS. For Network Load Balancers, the supported protocols are TCP, TLS, UDP, or TCP_UDP. For Gateway Load Balancers, the supported protocol is GENEVE. A TCP_UDP listener must be associated with a TCP_UDP target group. If the target is a Lambda function, this parameter does not apply.
+
+Required: Conditional
+
+Type: String
+
+Allowed values: GENEVE | HTTP | HTTPS | TCP | TCP_UDP | TLS | UDP
+
+Update requires: Replacement
+
+ProtocolVersion
+[HTTP/HTTPS protocol] The protocol version. The possible values are GRPC, HTTP1, and HTTP2.
+
+Required: No
+
+Type: String
+
+Update requires: Replacement
+
+Tags
+The tags.
+
+Required: No
+
+Type: List of Tag
+
+Update requires: No interruption
+
+TargetGroupAttributes
+The attributes.
+
+Required: No
+
+Type: List of TargetGroupAttribute
+
+Update requires: No interruption
+
+Targets
+The targets.
+
+Required: No
+
+Type: List of TargetDescription
+
+Update requires: No interruption
+
+TargetType
+The type of target that you must specify when registering targets with this target group. You can't specify targets for a target group using more than one target type.
+
+instance - Register targets by instance ID. This is the default value.
+
+ip - Register targets by IP address. You can specify IP addresses from the subnets of the virtual private cloud (VPC) for the target group, the RFC 1918 range (10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16), and the RFC 6598 range (100.64.0.0/10). You can't specify publicly routable IP addresses.
+
+lambda - Register a single Lambda function as a target.
+
+alb - Register a single Application Load Balancer as a target.
+
+Required: No
+
+Type: String
+
+Allowed values: alb | instance | ip | lambda
+
+Update requires: Replacement
+
+UnhealthyThresholdCount
+The number of consecutive health check failures required before considering a target unhealthy. The range is 2-10. If the target group protocol is TCP, TCP_UDP, UDP, TLS, HTTP or HTTPS, the default is 2. For target groups with a protocol of GENEVE, the default is 2. If the target type is lambda, the default is 5.
+
+Required: No
+
+Type: Integer
+
+Minimum: 2
+
+Maximum: 10
+
+Update requires: No interruption
+
+VpcId
+The identifier of the virtual private cloud (VPC). If the target is a Lambda function, this parameter does not apply. Otherwise, this parameter is required.
+
+Required: Conditional
+
+Type: String
+
+Update requires: Replacement
+
+Return values
+Ref
+When you pass the logical ID of this resource to the intrinsic Ref function, Ref returns the Amazon Resource Name (ARN) of the target group.
+
+For more information about using the Ref function, see Ref.
+
+Fn::GetAtt
+The Fn::GetAtt intrinsic function returns a value for a specified attribute of this type. The following are the available attributes and sample return values.
+
+For more information about using the Fn::GetAtt intrinsic function, see Fn::GetAtt.
+
+LoadBalancerArns
+The Amazon Resource Name (ARN) of the load balancer that routes traffic to this target group.
+
+TargetGroupArn
+The Amazon Resource Name (ARN) of the target group.
+
+TargetGroupFullName
+The full name of the target group. For example, targetgroup/my-target-group/cbf133c568e0d028.
+
+TargetGroupName
+The name of the target group. For example, my-target-group.
+
+Examples
+The following example creates a target group where the target is a Lambda function.
+
+YAML
+
+Resources:
+  MyLambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !GetAtt 
+        - MyLambdaFunction
+        - Arn
+      Action: 'lambda:InvokeFunction'
+      Principal: elasticloadbalancing.amazonaws.com
+
+  MyTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckEnabled: false
+      Name: MyTargets
+      TargetType: lambda
+      Targets:
+      - Id: !GetAtt [ MyLambdaFunction, Arn ]
+
+  MyLambdaFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      Role: !GetAtt [ LambdaExecutionRole, Arn ]
+      Code:
+        ZipFile: !Sub |
+          import json
+          
+          def handler(event, context):
+            response = {
+              "statusCode": 200,
+              "statusDescription": "200 OK",
+              "isBase64Encoded": False,
+              "headers": {
+                "Content-Type": "text/html; charset=utf-8"
+              }
+            }
+
+            response['body'] = """<html>
+            <head>
+            <title>Hello World!</title>
+            <style>
+            html, body {
+              margin: 0; padding: 0;
+              font-family: arial; font-weight: 700; font-size: 3em;
+              text-align: center;
+            }
+            </style>
+            </head>
+            <body>
+            <p>Hello World from Lambda</p>
+            </body>
+            </html>"""
+            return response      
+      Runtime: "python3.6"
+      Timeout: "25"
+
+  LambdaExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+
+### End of documentation
+
+Human: How do I ensure my load balancer is always active or healthy?
+Assistant: You can use the `HealthCheckEnabled` to determine whether your load balancer is healthy or not
+Human:
+
